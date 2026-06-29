@@ -25,10 +25,11 @@ Call `mcp__claude_ai_ClickUp__clickup_get_task` with the task ID. Capture title,
 ### 3. Verify environment
 ```bash
 git status                  # working tree must be clean
-git branch --show-current   # must NOT be master/main
+git branch --show-current
 ```
-- On `master`/`main` or dirty tree → stop and ask. **Do not create a branch** (per `feedback_branch_workflow`).
-- Match the existing branch naming pattern seen in `git branch -a` (e.g. `rick/<task-id>-<short-slug>`).
+- Dirty tree → stop and ask. Don't stash or discard work.
+- On `master`/`main` with a clean tree → **create a new branch for the ticket**. Look at `git branch -a` to copy the existing prefix/slug convention (e.g. `rick/<task-id>-<short-slug>`) and `git checkout -b` it. Note this overrides the older "never create a branch" rule for the main/master case only; on any other branch, keep working there.
+- On any non-main branch → keep working on the current branch (assume the user picked it intentionally).
 
 ### 4. Plan
 - Read `GLOSSARY.md` to locate relevant files for any domain term in the ticket.
@@ -68,10 +69,14 @@ git diff
 ### 8. Commit and open PR
 - **Commit message:** Conventional Commits, lowercase imperative subject. **Omit the `Co-Authored-By: Claude` trailer** (per `feedback_no_claude_coauthor_trailer`).
 - Push branch with `git push -u origin <branch>`.
-- Open PR with `gh pr create`. Title mirrors the lead commit. Body must include:
-  - **Why** (from ticket description — not "what").
-  - ClickUp link: `https://app.clickup.com/t/<TASK_ID>`.
-  - Test plan as a markdown checklist.
+- **Always populate `.github/pull_request_template.MD`** as the PR body. Read the file, fill every section, then pass the result to `gh pr create --body`. Do not invent a different structure.
+  - **Summary:** one or two bullets stating the _why_ (from the ticket), not a play-by-play of files touched.
+  - **Type of Change:** tick the single checkbox that matches the conventional-commit prefix (`fix:` → Bug fix, `feat:` → New feature, `refactor:` → Refactor, `chore:`/`docs:` → Chore / dependency update). Leave the other boxes empty.
+  - **Ticket / Context:** a bullet with the ClickUp link: `- https://app.clickup.com/t/<TASK_ID>`. If there's a Sentry/GitHub issue tied to the work, add it as a second bullet.
+  - **Testing:** tick the checkboxes you actually completed (`Tested locally` if you ran the dev server / smoke-tested, `Added/updated unit tests` if specs changed, `Tested on staging` only if you actually did). Add a markdown checklist under the section for any post-merge verification you couldn't do locally (e.g. "Watch Sentry rate after deploy").
+  - **Screenshots:** omit the section if the change is server-only; keep it with `_N/A_` if the template requires it visually.
+  - **Swagger:** include only when API surface changed; otherwise drop or mark `_N/A_`.
+- Title mirrors the lead commit.
 - **Do not include** any "Generated with Claude Code" footer.
 
 Return the PR URL.
@@ -79,7 +84,8 @@ Return the PR URL.
 ## Stop conditions
 Halt and ask the user before continuing if:
 - Ticket description requires product/copy decisions not specified.
-- Working tree is dirty or branch is `master`/`main`.
+- Working tree is dirty (regardless of branch).
 - Build/tests fail in a way you can't resolve from the diff alone.
 - The change spans multiple logical concerns — split into separate PRs (one logical change per PR per `CLAUDE.md`).
 - Touching `apps/api/src/app/hubspot/consumer/job-alert.consumer.ts` or related job-alert code — that pipeline is paused (per `project_job_alerts_disabled`); confirm intent first.
+- `.github/pull_request_template.MD` is missing — fall back to the previous body format (Why / ClickUp link / Test plan) and tell the user.
