@@ -25,18 +25,28 @@ Ask the user what the ticket is for. Probe until you can state the goal in one s
 
 Ask only the questions you can't reasonably infer. Don't interrogate — 2–4 sharp questions, then draft.
 
-### 2. Propose acceptance criteria
+### 2. Choose the AC format
 
-From the goal, **suggest** a list of acceptance criteria for the user to confirm or edit. Each AC is one verifiable expected outcome.
+Before drafting, ask the user how they want the acceptance criteria written, and draft in that format. Offer these options (default to **Checklist** if they have no preference):
 
-- Write them as testable statements: "Given/When/Then" or a plain "X happens when Y".
+- **Checklist** — plain `- [ ] X happens when Y` statements. Best for simple, scannable outcomes.
+- **Given/When/Then** — `Given <context>, When <action>, Then <result>`. Best for behavior-driven or scenario-heavy work.
+- **Rule-oriented** — short "The system must…" / "Users can…" rules. Best for constraints and policies.
+- **Scenario table** — a table of input → expected output rows. Best for many similar cases or data permutations.
+
+Ask once (e.g. *"How do you want the acceptance criteria formatted — a checklist, Given/When/Then, rules, or a scenario table?"*) and reuse that format for the rest of the session unless the user changes it.
+
+### 3. Propose acceptance criteria
+
+From the goal, **suggest** a list of acceptance criteria in the chosen format for the user to confirm or edit. Each AC is one verifiable expected outcome.
+
 - One outcome per AC — don't bundle. Split compound conditions.
 - Cover the happy path, key edge cases, and error/empty states.
 - Keep them observable (a reviewer can check it), not implementation steps.
 
-Present them as a checklist and ask: *"Which of these are right? Anything to add or drop?"*
+Present them and ask: *"Which of these are right? Anything to add or drop?"*
 
-### 3. Resolve the tracker
+### 4. Resolve the tracker
 
 Determine where the ticket goes:
 
@@ -44,9 +54,9 @@ Determine where the ticket goes:
 - If the user names a different tracker (Linear, Jira, Atlassian, Trello, monday.com, GitHub Issues, Notion), use that instead. If the chosen integration isn't authenticated, prompt the user to connect/authenticate it first.
 - If the user just wants the text (no tracker), output the formatted ticket in markdown.
 
-### 4. Assemble and confirm
+### 5. Assemble and confirm
 
-Build the ticket in this structure, show it to the user, and get a thumbs-up **before** creating it.
+Build the ticket in this structure, rendering the Acceptance Criteria in the format chosen in step 2, show it to the user, and get a thumbs-up **before** creating it.
 
 ```
 Title: <imperative, concise — e.g. "Add CSV export to reports">
@@ -59,14 +69,12 @@ Title: <imperative, concise — e.g. "Add CSV export to reports">
 - <concise requirement>
 
 ## Acceptance Criteria
-- [ ] <expected outcome 1>
-- [ ] <expected outcome 2>
-- [ ] <expected outcome 3>
+<rendered in the chosen format — e.g. a `- [ ]` checklist, Given/When/Then blocks, rules, or a scenario table, one expected outcome each>
 
 <Optional: Out of scope / Dependencies / Links>
 ```
 
-### 5. Create the ticket
+### 6. Create the ticket
 
 Create it in the resolved tracker (title, description body, and ACs in the checklist/description). Report back the ticket ID and URL.
 
@@ -89,7 +97,7 @@ Ask the user only for genuinely missing information — don't re-ask what the ti
 
 ### 3. Propose the improved version
 
-Rewrite the ticket into the standard structure (Title / Context / Requirements / Acceptance Criteria). Show it as a **before → after** so the user sees what changed, and briefly note the key fixes. Preserve anything already good; don't invent scope.
+Rewrite the ticket into the standard structure (Title / Context / Requirements / Acceptance Criteria). Keep the AC format the ticket already uses unless it's unclear or the user asks to change it — if so, offer the formats from step 2 of Create mode. Show it as a **before → after** so the user sees what changed, and briefly note the key fixes. Preserve anything already good; don't invent scope.
 
 ### 4. Update in place
 
