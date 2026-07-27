@@ -1,0 +1,12 @@
+{"skill":"sentry-cleanup","ts":"2026-07-08T11:00:00Z","project":"skillz","outcome":"3 tickets via ClickUp","duration_min":12}
+{"skill":"sentry-cleanup","ts":"2026-07-06T14:30:00Z","project":"skillz","outcome":"1 ticket via GitHub","duration_min":8}
+{"skill":"sentry-cleanup","ts":"2026-07-05T09:15:00Z","project":"webapp","outcome":"5 tickets via ClickUp","duration_min":20}
+{"skill":"code-review","ts":"2026-07-07T16:00:00Z","project":"skillz","outcome":"reviewed PR #42","duration_min":15}
+{"skill":"code-review","ts":"2026-07-06T10:00:00Z","project":"skillz","outcome":"reviewed PR #41","duration_min":10}
+{"skill":"code-review","ts":"2026-07-05T11:00:00Z","project":"webapp","outcome":"reviewed PR #12","duration_min":18}
+{"skill":"daily-report","ts":"2026-07-08T08:00:00Z","project":"skillz","outcome":"daily standup","duration_min":2}
+{"skill":"daily-report","ts":"2026-07-07T08:00:00Z","project":"skillz","outcome":"daily standup","duration_min":2}
+{"skill":"daily-report","ts":"2026-07-06T08:00:00Z","project":"skillz","outcome":"daily standup","duration_min":3}
+{"skill":"write-ticket","ts":"2026-07-07T13:00:00Z","project":"skillz","outcome":"created feature ticket","duration_min":5}
+{"skill":"sentry-cleanup","ts":"2026-07-09T04:05:00Z","project":"app.bruntwork.com","outcome":"in-progress","duration_min":0}
+{"skill":"sentry-cleanup","ts":"2026-07-09T04:20:00Z","project":"app.bruntwork.com","outcome":"1 parent + 16 subtasks in ClickUp Product Backlog (tech-maintenance); triaged 50 unresolved issues across 5 projects, excluded 33 noise","duration_min":15}
