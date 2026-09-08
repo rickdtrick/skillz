@@ -24,7 +24,10 @@ Always read `.github/pull_request_template.MD` and fill every section it defines
 
 **Screenshots**
 - Server-only change → omit the section, or keep it with `_N/A_` if the template requires it visually.
-- UI change with a Figma design → include a screenshot of the implemented result. Note any deliberate deviation from the design and why.
+- Any user-visible change → one labelled `**Before**` / `**After**` placeholder per screenshot captured in step 8, with a `<!-- drop <filename> here -->` line under each (see `SCREENSHOTS.md`). Label by breakpoint when more than one.
+- GitHub has no image-upload API: after the PR is open, tell the user where the files are saved and how to drag them onto the placeholders.
+- Built from a Figma design → note any deliberate deviation from the design and why.
+- User declined screenshots, or Browser MCP was unavailable → `_No screenshots (Browser MCP not enabled)_`. Never fabricate or describe a screenshot you didn't take.
 
 **Swagger**
 - Include only when the API surface changed; otherwise drop or mark `_N/A_`.

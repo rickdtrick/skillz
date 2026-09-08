@@ -8,5 +8,6 @@
 {"skill":"daily-report","ts":"2026-07-07T08:00:00Z","project":"skillz","outcome":"daily standup","duration_min":2}
 {"skill":"daily-report","ts":"2026-07-06T08:00:00Z","project":"skillz","outcome":"daily standup","duration_min":3}
 {"skill":"write-ticket","ts":"2026-07-07T13:00:00Z","project":"skillz","outcome":"created feature ticket","duration_min":5}
-{"skill":"sentry-cleanup","ts":"2026-07-09T04:05:00Z","project":"app.bruntwork.com","outcome":"in-progress","duration_min":0}
 {"skill":"sentry-cleanup","ts":"2026-07-09T04:20:00Z","project":"app.bruntwork.com","outcome":"1 parent + 16 subtasks in ClickUp Product Backlog (tech-maintenance); triaged 50 unresolved issues across 5 projects, excluded 33 noise","duration_min":15}
+{"skill": "sentry-cleanup", "ts": "2026-08-21T09:05:43Z", "project": "careers", "outcome": "4 ClickUp tickets under [ATS] Sentry issues (1 urgent, 3 high); triaged 29 unresolved across 2 careers projects, 17 noise ignored untilEscalating, 3 findings identified as regressions of completed tickets; ignoreErrors patch drafted for WEB-YZ", "duration_min": 42}
+{"skill": "sentry-cleanup", "ts": "2026-08-28T08:45:00Z", "project": "careers", "outcome": "re-validated 6 open tickets (4 from 08-21 + 2 in code review): all 4 recent still valid, WEB-YX rescoped to /register+/dashboard, WEB-VJ downgraded P1->P2, WEB-RZ + API-8 flagged for closure; 4 new tickets (WEB-PZ, WEB-Z8, WEB-YZ, API-3R P0 virus-scanner block on 349 applications); 22 third-party issues ignored untilEscalating", "duration_min": 60}

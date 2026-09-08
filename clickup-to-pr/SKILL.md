@@ -1,11 +1,11 @@
 ---
 name: clickup-to-pr
-description: Fetch one or more ClickUp tickets by ID or URL and produce self-reviewed PRs end-to-end. Use when the user provides ClickUp task IDs (e.g. `86exr740d`) or task URLs (e.g. `https://app.clickup.com/t/86exr740d`) and wants the changes implemented, verified, code-reviewed, and submitted as PRs with no further interaction. Multiple tickets are isolated in git worktrees under `.worktrees/`, so concurrent Claude sessions on the same repo never collide. For related tickets it asks whether the PRs should be stacked. Pulls design context from Figma when the ticket references a design. Designed for the careers monorepo but generalizes to any Nx + ClickUp project.
+description: Fetch one or more ClickUp tickets by ID or URL and produce self-reviewed PRs end-to-end. Use when the user provides ClickUp task IDs (e.g. `86exr740d`) or task URLs (e.g. `https://app.clickup.com/t/86exr740d`) and wants the changes implemented, verified, code-reviewed, and submitted as PRs with no further interaction. Multiple tickets are isolated in git worktrees under `.worktrees/`, so concurrent Claude sessions on the same repo never collide. For related tickets it asks whether the PRs should be stacked. Pulls design context from Figma when the ticket references a design, and captures before/after screenshots for frontend changes via Browser MCP. Designed for the careers monorepo but generalizes to any Nx + ClickUp project.
 ---
 
 # ClickUp → PR
 
-Pipeline per ticket: fetch → worktree → design → plan → implement → verify → self-review → PR.
+Pipeline per ticket: fetch → worktree → design → plan → implement → verify → screenshot → self-review → PR.
 
 ## Quick start
 
@@ -73,17 +73,30 @@ nx affected -t lint           # always
 - For API changes, also run `nx test api` — DI changes cascade.
 - Any failure → fix and re-run. Do not proceed with broken checks.
 
-### 8. Self-review (required before PR)
+### 8. Capture screenshots (frontend changes only)
+If the diff touches UI (components, pages, styles, anything user-visible), the PR needs before/after screenshots. See `SCREENSHOTS.md` for the full procedure.
+
+1. **Check for Browser MCP.** Look for `mcp__browsermcp__*` tools (or an equivalent browser-automation MCP) in the available tools.
+2. **Available** → ask the user where to save the files, run the app, navigate to the changed view, and capture each affected breakpoint the ticket or design calls for. GitHub has no image-upload API, so the PR body gets labelled placeholders and the user drags the files in — `SCREENSHOTS.md` has the exact hand-off wording.
+3. **Not available** → ask the user:
+   > This change is user-facing. Do you want screenshots in the PR? I'd need Browser MCP enabled to capture them.
+   - **Yes** → give the setup instructions from `SCREENSHOTS.md`, wait for the user to confirm it's connected, then capture as in step 2.
+   - **No** → continue and write `_No screenshots (Browser MCP not enabled)_` in the Screenshots section.
+4. Never fabricate a screenshot or describe one you didn't take.
+
+### 9. Self-review (required before PR)
 Invoke `pr-review-toolkit:code-reviewer` with `git diff`.
 - Address high-confidence findings inline, then re-run step 7.
 - Note uncertain/style findings in the PR description rather than auto-fixing.
 - If the diff touches error handling, also invoke `pr-review-toolkit:silent-failure-hunter`.
+- If a fix changes rendered output, re-capture the screenshots from step 8.
 
-### 9. Commit and open PR
+### 10. Commit and open PR
 - **Commit message:** Conventional Commits, lowercase imperative subject. No attribution trailer (see **Attribution rule**).
 - `git push -u origin <branch>`.
 - **Always populate `.github/pull_request_template.MD`** as the PR body — read it, fill every section, pass to `gh pr create --body`. See `PR-BODY.md` for the section-by-section rules.
-- If the change was built from a Figma design, put the Figma link in the Ticket / Context section and a screenshot in Screenshots.
+- If the change was built from a Figma design, put the Figma link in the Ticket / Context section.
+- Screenshots section: labelled `**Before**`/`**After**` placeholders for the step 8 captures (or the declined/unavailable note), then tell the user where the files are and how to drag them in.
 - In multi-ticket mode, set the base branch per the stacking decision below.
 - Title mirrors the lead commit.
 
