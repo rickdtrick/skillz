@@ -58,14 +58,3 @@ description: Create timestamped log entries on any Markdown page. Use when the u
    - If creating a new page, include empty frontmatter `---\n\n---` at the top
 
 7. **Confirm** — tell the user what was logged and where
-
-## Example
-
-```
-User: log blood sugar 95 fasting
-You: Where should it go?
-User: in Health
-You: Is there an existing page or create a new one?
-User: new page
-You: Table or bullet format?
-```

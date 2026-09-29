@@ -6,7 +6,7 @@ description: Creates timestamped Markdown notes with frontmatter and a chosen sa
 # take-note
 
 ## Quick start
-"take a note about the new API design" — creates `~/notes/2024-01-15-api-design.md`
+"take a note about the new API design" — creates `~/notes/{today}-api-design.md`
 
 ## Workflow
 
@@ -20,12 +20,7 @@ description: Creates timestamped Markdown notes with frontmatter and a chosen sa
 - Format: `YYYY-MM-DD-{slug}.md`
 - If no topic, use `YYYY-MM-DD-note-{n}.md` (increment if needed)
 
-### 3. Request permissions
-- You need `write` permission on the save directory
-- If the directory doesn't exist, you also need `bash` or `write` to create it
-- If permissions are `"ask"`, request approval: *"Create note at {path}?"*
-
-### 4. Create the note
+### 3. Create the note
 Write a Markdown file with this structure:
 
 ```markdown
@@ -40,5 +35,5 @@ tags: []
 {content}
 ```
 
-### 5. Confirm
+### 4. Confirm
 Tell the user where the note was saved.

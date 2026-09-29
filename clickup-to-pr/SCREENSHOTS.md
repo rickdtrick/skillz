@@ -37,7 +37,7 @@ GitHub has no API for uploading images to a PR, so the user has to attach them b
 - Name files so the drop order is obvious: `01-before-desktop.png`, `02-after-desktop.png`, `03-after-mobile.png`.
 
 ## 5. Capture
-1. Start the dev server for the touched project (e.g. `nx serve <project>`) and note the local URL.
+1. Start the dev server for the touched project using the repo's own script (check `package.json`, the Makefile, or the monorepo tool's config) and note the local URL.
 2. Navigate to the changed view. Log in first if the view is behind auth — ask the user for credentials or a seeded account rather than guessing.
 3. Capture **after** state for every affected view.
 4. Capture **before** state when the change modifies existing UI: stash or check out the base branch, reload, capture, then return to the working branch. Skip this for brand-new views.

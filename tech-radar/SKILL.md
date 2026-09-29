@@ -17,7 +17,7 @@ Use this as context for relevance scoring — but surface tech from **any** area
 
 ### Step 1 — Research (run these searches in parallel)
 
-Use **Tavily** for all web research (`mcp__claude_ai_Tavily__tavily_search` for broad searches, `mcp__claude_ai_Tavily__tavily_research` for deep dives on specific items, `mcp__claude_ai_Tavily__tavily_extract` to pull content from specific URLs). Run all category searches in parallel. Target current, dated sources (GitHub trending, dev blogs, release announcements, Hacker News, ThoughtWorks radar, etc.):
+Prefer Tavily for web research when its MCP is connected — load its tools with `ToolSearch` (`+tavily search`) rather than assuming tool names, and authenticate first if only `authenticate` is exposed. Fall back to `WebSearch` / `WebFetch` when it isn't. Run all category searches in parallel. Target current, dated sources (GitHub trending, dev blogs, release announcements, Hacker News, ThoughtWorks radar, etc.):
 
 - **Frontend**: new frameworks, rendering patterns, build tools, UI libraries
 - **Backend**: new runtimes, frameworks, API patterns, ORMs

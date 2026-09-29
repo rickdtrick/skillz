@@ -19,8 +19,8 @@ description: Create new agent skills with proper structure, progressive disclosu
    - If borderline, flag the concern and let the user decide
 
 3. **Draft the skill** - create:
-   - `SKILL.md` with concise instructions (under 100 lines)
-   - Additional reference files if content exceeds 100 lines
+   - `SKILL.md` readable in one sitting — the parts needed on every invocation
+   - Additional reference files for detail only some runs need
    - Utility scripts if deterministic operations are needed
 
 4. **Review with user** - confirm:
@@ -75,7 +75,7 @@ Add scripts when the operation is deterministic (validation, formatting) or the 
 ## Review Checklist
 
 - [ ] Description includes "Use when..." triggers
-- [ ] SKILL.md under 100 lines
+- [ ] SKILL.md readable in one sitting; detail moved to reference files
 - [ ] No time-sensitive info
 - [ ] Concrete examples included
 - [ ] Split into separate files if content is large

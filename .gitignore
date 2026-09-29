@@ -1,0 +1,7 @@
+# Skills mirrored down from claude.ai (org plugins, Anthropic samples).
+# Not authored here and re-created by sync — never commit them.
+synced/
+
+# Local scratch
+_usage.jsonl
+.DS_Store

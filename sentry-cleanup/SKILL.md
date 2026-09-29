@@ -7,32 +7,30 @@ description: Check Sentry errors, investigate grouped issues, and create tickets
 
 ## Quick Start
 
-1. **Log usage** — append one JSONL line to `~/.claude/skills/_usage.jsonl`:
-   `{"skill":"sentry-cleanup","ts":"<ISO timestamp>","project":"<repo name>","outcome":"<summary>","duration_min":<minutes>}`
-2. Get Sentry auth token (ask user or check `SENTRY_AUTH_TOKEN`) + org slug
-3. Fetch unresolved issues from Sentry API
-4. Investigate each error group
-5. Ask: ClickUp (default) or GitHub Issues?
-6. Create tickets with severity labels and tags
+1. Resolve the org and project — `mcp__claude_ai_Sentry__find_organizations`, then `find_projects`
+2. Fetch unresolved issues
+3. Investigate each error group
+4. Ask: ClickUp (default) or GitHub Issues?
+5. Create tickets with severity labels and tags
 
 ## Fetch Errors
 
-Use [tavily_tavily_extract] or `webfetch` to call the Sentry API:
+Prefer the Sentry MCP over raw HTTP — it handles auth, pagination, and org scoping:
 
-```
-GET https://sentry.io/api/0/organizations/{org_slug}/issues/?statsPeriod=24h&query=is:unresolved
-Authorization: Bearer {token}
-```
+- `mcp__claude_ai_Sentry__search_issues` with `is:unresolved` over the last 24h.
+- `mcp__claude_ai_Sentry__get_sentry_resource` for the full issue record.
+- `mcp__claude_ai_Sentry__analyze_issue_with_seer` when the root cause isn't obvious
+  from the stack trace.
 
-Paginate if `count > 100` (`?cursor=` param in response headers). Capture: `id`, `title`, `level`, `count`, `userCount`, `firstSeen`, `lastSeen`, `permalink`, `culprit`, `shortId`, `type`.
+Capture per issue: `id`, `title`, `level`, `count`, `userCount`, `firstSeen`,
+`lastSeen`, `permalink`, `culprit`, `shortId`, `type`.
+
+If the Sentry MCP is not connected, fall back to `WebFetch` against
+`https://sentry.io/api/0/organizations/{org_slug}/issues/?statsPeriod=24h&query=is:unresolved`
+with a `SENTRY_AUTH_TOKEN` bearer header, paginating via the `?cursor=` param in the
+response headers.
 
 ## Investigate Per Group
-
-For each unique `id`, fetch full details:
-
-```
-GET https://sentry.io/api/0/issues/{id}/
-```
 
 Examine:
 - **Stack trace** — root cause file/function/line
@@ -61,7 +59,7 @@ Examine:
    - `tags`: `["sentry", "bug", "{environment}"]`
 
 ### GitHub Issues
-Use `github_issue_write` with:
+Use `mcp__github__create_issue` with:
 - `title`: error message
 - `body`: investigation summary + Sentry permalink
 - `labels`: `["sentry", "bug", "severity/{level}"]`
@@ -97,20 +95,3 @@ Use `github_issue_write` with:
 - If errors are related (same component/flux), offer to consolidate into one ticket
 - Respect rate limits: Sentry 500 req/min, ClickUp 100 req/min
 
-## Usage Tracking
-
-Every skill invocation appends a JSONL line to `~/.claude/skills/_usage.jsonl`:
-
-```json
-{"skill":"sentry-cleanup","ts":"2026-07-08T11:00:00Z","project":"skillz","outcome":"3 tickets via ClickUp","duration_min":12}
-```
-
-To visualize usage, read `_usage.jsonl` and generate a Mermaid chart. The agent supports three views:
-
-| View | Diagram | Command |
-|------|---------|---------|
-| **Distribution** | Pie — proportion of total use per skill | `pie title Skill Usage` with summed counts per skill |
-| **Timeline** | Gantt — each skill invocation as a task bar | `gantt title Skill Usage Timeline` with dateFormat and one task per entry |
-| **Frequency** | XY bar — usage count per skill over last N days | `xychart-beta` with bar data per skill label |
-
-To render, ask the agent: *"Show me skill usage as a {pie|gantt|bar} chart"*. The agent reads `_usage.jsonl`, aggregates, generates Mermaid code, and renders it via `mermaid_validate_and_render_mermaid_diagram`.

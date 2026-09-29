@@ -5,47 +5,24 @@ description: QA and testing best practices - unit tests, integration tests, test
 
 # QA Framework
 
-## Unit Tests
-- Test ONE thing per test
-- Name describes the scenario + expected result
-- AAA pattern: Arrange, Act, Assert
-- Mock external dependencies
+House conventions that override the model's defaults.
 
-## Integration Tests
-- Test real interactions between components
-- Use test database (not production)
-- Clean state between tests
-- Test happy path AND edge cases
+## Coverage stance
+Coverage is a diagnostic, not a target. Critical paths and error handling are covered
+first; a gap in business logic is a finding, a gap in getters or config is not.
 
-## Test Coverage
-- Aim for 80%+ on business logic
-- NOT a goal: 100% coverage ≠ good tests
-- Cover: happy path, error handling, edge cases
-- Priority: critical paths first
+## Do not test
+Implementation details, third-party libraries, simple accessors, config values.
+Tests that mirror the implementation break on refactor and are a finding in review.
 
-## What to Test
-- Public API responses
-- Error handling paths
-- Edge cases (empty, null, negative)
-- Security checks
-- Performance-sensitive code
+## Integration tests
+Real component interactions against a test database, with state reset between tests.
+Never point an integration test at production.
 
-## What NOT to Test
-- Implementation details
-- Third-party libraries
-- Simple getters/setters
-- Config values
+## Naming
+Test name states the scenario and the expected result, so a failure is readable
+without opening the file: `should throw on invalid input`.
 
-## Test Naming
-```
-describe('Calculator', () => {
-  it('should add two numbers correctly')
-  it('should throw on invalid input')
-})
-```
-
-## Best Practices
-- Tests are documentation
-- Fail fast, fail clear
-- Keep tests fast (< 100ms each)
-- One assertion per test when possible
+## Speed
+Unit tests stay under ~100ms each. A slow unit test is usually an integration test
+in the wrong directory.

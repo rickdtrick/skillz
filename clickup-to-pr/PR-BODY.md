@@ -1,17 +1,17 @@
 # Filling the PR template
 
-Always read `.github/pull_request_template.MD` and fill every section it defines. Do not invent a different structure. If the file is missing, fall back to Why / ClickUp link / Test plan and tell the user.
+Read `.github/pull_request_template.MD` and fill every section it defines, using the repo's own section names. Do not invent a different structure, and drop the rules below for sections the template doesn't have. If the file is missing, fall back to Why / ClickUp link / Test plan and tell the user.
 
 ## Section rules
 
 **Stacked on** (multi-ticket stacked PRs only)
-- First line of the body: `Stacked on #<parent-PR>`. Also confirm the PR base branch is the parent branch, not `main`.
+- First line of the body: `Stacked on #<parent-PR>`. Also confirm the PR base branch is the parent branch, not the default branch.
 
 **Summary**
 - One or two bullets stating the _why_ (from the ticket), not a play-by-play of files touched.
 
 **Type of Change**
-- Tick the single checkbox matching the conventional-commit prefix: `fix:` → Bug fix, `feat:` → New feature, `refactor:` → Refactor, `chore:`/`docs:` → Chore / dependency update. Leave the other boxes empty.
+- Tick the single checkbox matching the conventional-commit prefix: `fix:` → Bug fix, `feat:` → New feature, `refactor:` → Refactor, `chore:`/`docs:` → Chore / dependency update. Leave the other boxes empty. If the template defines different options, match those instead.
 
 **Ticket / Context**
 - `- https://app.clickup.com/t/<TASK_ID>`
@@ -28,9 +28,6 @@ Always read `.github/pull_request_template.MD` and fill every section it defines
 - GitHub has no image-upload API: after the PR is open, tell the user where the files are saved and how to drag them onto the placeholders.
 - Built from a Figma design → note any deliberate deviation from the design and why.
 - User declined screenshots, or Browser MCP was unavailable → `_No screenshots (Browser MCP not enabled)_`. Never fabricate or describe a screenshot you didn't take.
-
-**Swagger**
-- Include only when the API surface changed; otherwise drop or mark `_N/A_`.
 
 ## Never include
 No `Co-Authored-By: Claude` trailer, no "Generated with Claude Code" footer, no AI/assistant mention anywhere in the title, body, or commits.

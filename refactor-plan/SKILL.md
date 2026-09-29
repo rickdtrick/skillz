@@ -9,7 +9,7 @@ description: Analyse a specific file, module, or flow and produce a refactoring 
 
 1. **Determine scope** — single file, module, or multi-file flow
 2. **Decide if related code is needed** — if the target is self-contained, proceed with what's visible; if it has non-obvious dependencies, callers, or shared state, explore those files before forming an opinion
-3. **Research best practices** — use Context7 or Tavily (no priority preference) to find current patterns for the language/framework involved; gather multiple approaches where available
+3. **Research best practices** — search the web for current patterns for the language/framework involved; gather multiple approaches where available. Use whichever search or docs MCP is connected (Tavily, Context7); if none is, use `WebSearch`.
 4. **Analyse the code** — identify:
    - Duplicated logic
    - Large functions doing too much

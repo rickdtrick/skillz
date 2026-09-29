@@ -67,36 +67,19 @@ Return the result as a markdown checklist. Format:
 
 **Concrete input → checklist:**
 
-> User: "Set up a new Next.js 14 project with Tailwind, Prisma, and PostgreSQL, and deploy to Vercel"
+> User: "Set up a new Next.js project with Tailwind, Prisma, and PostgreSQL, and deploy to Vercel"
 
-Output:
+Output (illustrative shape, not a template to copy):
 
 ```md
-# Set Up Next.js 14 Project
-
-## Project Init
-
-- [ ] Create Next.js 14 app with App Router (`npx create-next-app@14`)
-- [ ] Install and configure Tailwind CSS
-- [ ] Set up ESLint and Prettier
-- [ ] Verify: `npm run dev` starts without errors
+# Set Up Next.js Project
 
 ## Database
 
-- [ ] Install Prisma (`npm install prisma @prisma/client`)
-- [ ] Initialize Prisma (`npx prisma init`)
-- [ ] Define schema (User model or whatever is needed)
-- [ ] Set up PostgreSQL connection string in `.env`
-- [ ] Run `npx prisma db push`
-- [ ] Verify: `npx prisma studio` opens and shows schema
-
-## Deploy
-
-- [ ] Push repo to GitHub
-- [ ] Import project in Vercel dashboard
-- [ ] Set environment variables in Vercel
-- [ ] Trigger deploy and verify build succeeds
-- [ ] Check live URL loads correctly
+- [ ] Install and initialize Prisma
+- [ ] Define the schema
+- [ ] Set the PostgreSQL connection string in `.env`
+- [ ] Verify: `npx prisma studio` opens and shows the schema
 ```
 
 ## Tips

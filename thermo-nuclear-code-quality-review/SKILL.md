@@ -15,14 +15,6 @@ The skill operates in two modes:
 
 Detect the mode automatically from the current branch name. If `main` or `master` (or the user says "audit"), use audit mode.
 
-## Core Prompt
-
-**PR mode:**
-> Perform a deep code quality audit of the current branch's changes. Rethink how to structure the changes to improve quality without impacting behavior. Improve abstractions, modularity, reduce spaghetti, improve succinctness. Be ambitious — if there is a clear path to a simpler implementation involving restructuring, go for it. Be extremely thorough.
-
-**Audit mode:**
-> Perform a deep code quality audit of the entire codebase on main/master. Identify the most important structural problems: the most tangled files, the worst abstraction violations, the biggest files past healthy size boundaries, and the highest-value refactor targets. Prioritize findings by impact. Do not rubber-stamp existing code — the bar is the same as for a PR.
-
 ## Non-Negotiable Standards
 
 0. **Be ambitious about structural simplification.** Look for reframings that make branches, conditionals, or entire layers disappear. Prefer the solution that feels inevitable.

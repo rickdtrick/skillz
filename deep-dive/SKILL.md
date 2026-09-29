@@ -65,7 +65,7 @@ Run steps 1–6 without stopping, then hand off to the Teach phase.
 
 ### 1. Research the whole topic
 
-For every lesson you plan to write, find **3+ authoritative sources** (official docs, papers, books, expert posts) using Context7 and web search. Extract the canonical definition, a concrete example, edge cases, common mistakes, and counter-examples. Never rely on parametric knowledge alone.
+For every lesson you plan to write, find **3+ authoritative sources** (official docs, papers, books, expert posts) using whichever search or docs MCP is connected, falling back to `WebSearch`. Extract the canonical definition, a concrete example, edge cases, common mistakes, and counter-examples. Never rely on parametric knowledge alone.
 
 Add every source to `REFERENCES.md` with a `Use for:` annotation as you go. If a concept has no authoritative source, mark it `[uncertain]` in the concept map rather than inventing one.
 

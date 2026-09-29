@@ -1,35 +1,21 @@
 # skillz
 
-Custom skills for opencode CLI.
+Personal Claude Code skills. Each directory is one skill: a `SKILL.md` plus
+optional `REFERENCE.md` / `EXAMPLES.md` companion files.
 
-## Available Skills
+## Install
 
-- **code-review** - Code review best practices (security, performance, maintainability)
-- **qa** - QA and testing best practices
-
-## Setup
-
-Symlink to opencode's skills directory. Replace `<path-to-skills>` with your actual skills folder path:
+Files in this repo are hard-linked into `~/.claude/skills/`, so an edit here is live
+immediately with no copy step. To add a new skill after creating its directory:
 
 ```bash
-ln -s <path-to-skills> ~/.config/opencode/skills
+ln <skill-name>/SKILL.md ~/.claude/skills/<skill-name>/SKILL.md
 ```
 
-For example, if your skills repo is at `~/Projects/skills`:
+## Skills
 
-```bash
-ln -s ~/Projects/skills ~/.config/opencode/skills
-```
+Run `ls -d */` for the current list, or `/<skill-name>` in Claude Code to invoke one.
+Each skill's `description` frontmatter states what it covers and when it triggers —
+that is the single source of truth; this file does not duplicate it.
 
-Or if you already have a skills symlink, update it:
-
-```bash
-rm ~/.config/opencode/skills
-ln -s <path-to-skills> ~/.config/opencode/skills
-```
-
-## Usage
-
-When working on a task that matches a skill, opencode will automatically load it:
-- `code-review` skill - when reviewing code for security, performance, and best practices
-- `qa` skill - when writing tests or ensuring code quality
+`synced/` holds skills installed from elsewhere and is not maintained here.

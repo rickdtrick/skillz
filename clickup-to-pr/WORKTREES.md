@@ -5,10 +5,10 @@ Multiple tickets never share a working tree. Each ticket gets its own git worktr
 ## Layout
 
 ```
-~/Projects/careers/              # main tree, stays on main and stays clean
+<repo-root>/                     # main tree, stays on the default branch and stays clean
   .worktrees/
-    86exr740d/                   # branch rick/86exr740d-fix-alert-copy
-    86exr8f2p/                   # branch rick/86exr8f2p-add-consent-field
+    86exr740d/                   # branch <user>/86exr740d-<slug>
+    86exr8f2p/                   # branch <user>/86exr8f2p-<slug>
 ```
 
 ## One-time setup per repo
@@ -25,17 +25,17 @@ If the repo already ignores it in `.gitignore`, leave that alone.
 
 ```bash
 git fetch origin
-git worktree add .worktrees/<TASK_ID> -b <branch-name> origin/main
+git worktree add .worktrees/<TASK_ID> -b <branch-name> origin/<default-branch>
 ```
 
-- `<branch-name>` follows the repo's existing convention (check `git branch -a`), e.g. `rick/<task-id>-<short-slug>`.
+- `<branch-name>` follows the repo's existing convention (check `git branch -a`), e.g. `<user>/<task-id>-<short-slug>`.
 - For a **stacked** ticket, base it on the parent's branch instead of `origin/main`:
   ```bash
   git worktree add .worktrees/<TASK_ID> -b <child-branch> <parent-branch>
   ```
-- Install deps in the new tree if the project needs per-tree `node_modules` (`npm ci` / `pnpm install`). Nx caches are shared via the repo root, so this is usually fast.
+- Install dependencies in the new tree if the project needs per-tree ones. Build caches are usually shared via the repo root, so this is faster than a cold clone.
 
-Run every command for a ticket (`nx build`, `nx test`, `git diff`, `git commit`, `gh pr create`) **from inside that worktree directory**.
+Run every command for a ticket (build, test, `git diff`, `git commit`, `gh pr create`) **from inside that worktree directory**.
 
 ## Concurrent sessions: claim before you use
 
@@ -49,7 +49,7 @@ git branch -a | grep <TASK_ID>
 Rules:
 - **Path or branch already exists and you didn't create it in this session → stop and ask the user.** Do not reuse, reset, or delete it. Another session may be mid-flight, and `git worktree add` on a checked-out branch fails anyway.
 - Only ever `git commit`, `git push`, or `git worktree remove` inside worktrees this session created.
-- Never `git checkout` in the main tree while worktrees are live — that's what caused the collision the worktrees exist to prevent.
+- Never `git checkout` in the main tree while worktrees are live — that reintroduces the collision the worktrees exist to prevent.
 - If a worktree directory exists but `git worktree list` doesn't show it (stale from a killed session), run `git worktree prune` first, then report it to the user before recreating.
 
 ## Cleanup
