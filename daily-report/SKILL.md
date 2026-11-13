@@ -1,6 +1,6 @@
 ---
 name: daily-report
-description: Produce a single consolidated stand-up report across the user's configured repos for a given day — git commits, ticket IDs from branch names, PR states, and uncommitted work — then deliver it via the user's chosen channel (terminal, Slack, Discord, PDF, etc.). Use when the user wants a daily/end-of-day summary, "what did I ship today", or stand-up notes. Runs from any directory. Defaults to today; accepts `yesterday`, `last N days`, or an ISO date. On first invocation, asks the user for the repo list, line format, and delivery target and saves them to local memory.
+description: Produce a single consolidated stand-up report across the user's configured repos for a given day — git commits, ticket IDs from branch names, PR states, and uncommitted work — then deliver it via the user's chosen channel (terminal, Slack, Discord, PDF, etc.). Also produces a weekly Done / Doing / Next summary that adds work with no commits (PR reviews, Claude Code sessions, assigned tracker tasks). Use when the user wants a daily/end-of-day summary, "what did I ship today", stand-up notes, a weekly report, or "what did I do this week". Runs from any directory. Defaults to today; accepts `yesterday`, `last N days`, an ISO date, `week`, or `last week`. On first invocation, asks the user for the repo list, line format, and delivery target and saves them to local memory.
 ---
 
 # Daily Report
@@ -11,7 +11,7 @@ A repo-agnostic, tracker-agnostic, delivery-agnostic daily report skill. All use
 
 Pull these from local project memory:
 
-- `[[daily-report-repos]]` — absolute paths to the repos to scan.
+- `[[daily-report-repos]]` — absolute paths to the repos to scan, each with an optional short label (for example, the product name) used in the weekly report.
 - `[[daily-report-format]]` — the line template + ticket-tracker URL pattern + status labels.
 - `[[daily-report-delivery]]` — where the report goes (terminal, Slack, Discord, PDF file, etc.).
 
@@ -22,7 +22,7 @@ If **any** of these are missing, run the **First-run setup** below before contin
 Ask the user the following, then save each answer as the corresponding memory above. Don't proceed to the report until they're all set.
 
 ### Q1 — Repos to scan
-> "Which local repos should this report cover? Give me absolute paths, one per line."
+> "Which local repos should this report cover? Give me absolute paths, one per line, each optionally followed by a short label (for example, `~/work/api  Billing`)."
 
 Validate each path exists and is a git repo. Skip and warn for any that aren't.
 
@@ -53,6 +53,8 @@ Options:
 Whatever they pick, save it verbatim. The runtime resolves the right tool at delivery time.
 
 ## Workflow (after configuration is in place)
+
+If the argument is `week`, `this week`, `weekly`, `last week`, or `week of <date>`, follow [WEEKLY.md](WEEKLY.md) instead of the steps below. It reuses steps 2, 3, 5, 6, and 7.
 
 ### 1. Resolve the date range
 - `today` (default) → midnight local → now.
@@ -186,6 +188,6 @@ One-line receipt: `Delivered to <target> ({permalink if available})` or `Printed
 
 ## Notes
 - Local timezone for date math.
-- Read-only: no `git` writes, no ticket updates, no `gh pr edit`.
+- Read-only: no `git` writes, no ticket updates, no `gh pr edit`. `sessions.sh` only reads Claude Code transcripts under `~/.claude/projects/`.
 - Commit author email is **not** a filter — the configured repo list is the work-vs-personal discriminator.
 - All organization/identity specifics live in the user's local memory, not in this skill.

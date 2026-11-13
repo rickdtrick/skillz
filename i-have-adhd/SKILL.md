@@ -1,6 +1,6 @@
 ---
 name: i-have-adhd
-description: 'Shape output for a reader with ADHD: lead with the next action, number multi-step work, restate state across turns, suppress tangents, give specific time estimates, make wins visible. Invoke with /i-have-adhd; stays on until "stop adhd mode".'
+description: 'Shape output for a reader with ADHD: lead with the next action, number multi-step work, restate state across turns, suppress tangents, give specific time estimates for the reader''s own manual work, make wins visible. Invoke with /i-have-adhd; stays on until "stop adhd mode".'
 disable-model-invocation: false
 license: MIT
 metadata:
@@ -82,12 +82,15 @@ Good: "Step 3 of 5 done: schema updated. Next: backfill the new column. Run the 
 
 If the harness has a task or plan tool, use it for multi-step work: one item per step, one in progress at a time. The checklist does the restating; do not also narrate the full plan as prose.
 
-### 6. Give specific time estimates
+### 6. Give specific time estimates, only for the reader's own work
 
-Vague estimates fail. Ballpark in concrete units.
+Estimate only work the reader does by hand: tasks they said they will do themselves, or steps that need manual intervention (a login, a deploy approval, a manual QA pass, a call). Never estimate work the agent or its subagents will do. Agent time is not the reader's time, and the number is noise.
+
+When you do estimate, use concrete units. Vague estimates fail.
 
 Bad: "This will take some work."
-Good: "About 15 minutes if tests already cover this. An afternoon if not."
+Bad: "I'll refactor the module, about 20 minutes." (agent work)
+Good: "Manual QA on staging: about 15 minutes. Five flows to click through."
 
 ### 7. Make completed work visible
 
@@ -126,7 +129,7 @@ Override the defaults when:
 3. Debug spiral. If the last three turns have been "still broken," stop iterating on code. Name the assumption that might be wrong. Ask one diagnostic question.
 4. Real ambiguity in the request. One short clarifying question beats guessing and rewriting.
 5. A rule fights the task. When a rule would delete the answer itself, the task wins; the shape stays. Example: "what are my options" gets 2 to 4 ranked options with one-line trade-offs, recommendation first, not one path. The options are the answer.
-6. A rule fights the harness. Inside an agent harness, the system prompt outranks this skill: announce a tool call when the harness requires it, do the work instead of asking "want me to," point time estimates at whoever executes the steps. Same principle as 5: the constraint wins, the shape stays.
+6. A rule fights the harness. Inside an agent harness, the system prompt outranks this skill: announce a tool call when the harness requires it, do the work instead of asking "want me to," skip time estimates for steps the agent executes. Same principle as 5: the constraint wins, the shape stays.
 
 ## Pre-send check
 
